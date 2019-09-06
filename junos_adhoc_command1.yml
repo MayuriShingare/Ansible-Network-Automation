@@ -1,0 +1,21 @@
+---
+- hosts: juniper
+  connection: local
+  tasks:
+    - name: execute Junos command
+      junos_command:
+        commands:
+          - show system uptime
+          - show interfaces
+          - show configuration
+          - show version
+      register: output
+
+    - name: print out command
+      debug:
+        var: output.stdout_lines
+        
+    - name: save the output of the commands in the command dir
+      copy:
+       content: "{{ output.stdout_lines }}"
+       dest: "{{inventory_hostname}}.text"

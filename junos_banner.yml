@@ -1,0 +1,30 @@
+---
+- name: configure the login banner
+  hosts: juniper
+  connection: local
+  gather_facts: yes
+  tasks:
+    - name: configure the login banner
+      junos_banner:
+       banner: login
+       text: |
+               -----------------------------------------------------------------------
+
+                      This is a private network. No unauthorised access
+
+                      If you are not authorised to use this equipment you must
+
+                                   DISCONNECT IMMEDIATELY
+
+               -----------------------------------------------------------------------
+
+       state: present
+    - name: Configure motd banner
+      junos_banner:
+       banner:  motd
+       text: |
+               -----------------------------------------------------------------------
+                         #Unauthorized access to this device is prohibited!#
+               -----------------------------------------------------------------------\n
+       
+       state: present        
